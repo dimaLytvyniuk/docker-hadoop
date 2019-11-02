@@ -12,7 +12,9 @@ services:
     env_file:
       - ./hadoop.env
     ports:
-      - "9870:9870"
+      - "9871:9870"
+      - "9872:50070"
+      - "19889:19888"
   
   resourcemanager:
     build: ./resourcemanager
@@ -22,12 +24,13 @@ services:
       - namenode
       - datanode1
       - datanode2
+      - datanode3
     environment:
       SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
     env_file:
       - ./hadoop.env
     ports:
-      - "8088:8088"
+      - "8087:8088"
   
   historyserver:
     build: ./historyserver
@@ -37,6 +40,7 @@ services:
       - namenode
       - datanode1
       - datanode2
+      - datanode3
     environment:
       SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     volumes:
@@ -54,6 +58,7 @@ services:
       - namenode
       - datanode1
       - datanode2
+      - datanode3
     env_file:
       - ./hadoop.env
     
